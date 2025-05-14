@@ -1,13 +1,17 @@
 package com.example.my_track_fit.network
 
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.Call
+import retrofit2.http.Body
+import retrofit2.http.POST
 
-object RetrofitClient {
-    private const val BASE_URL = "http://tu-servidor.com/api/" // Cambia esto por la URL de tu backend
+// Define los datos que enviarás al backend
+data class LoginRequest(val Username: String, val Password: String)
 
-    val instance: Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+// Define la respuesta que recibirás del backend
+data class LoginResponse(val success: Boolean, val message: String, val Id: Int?)
+
+// Define las rutas de tu API
+interface ApiService {
+    @POST("login") // Ruta del endpoint en tu backend
+    fun loginUser(@Body request: LoginRequest): Call<LoginResponse>
 }
