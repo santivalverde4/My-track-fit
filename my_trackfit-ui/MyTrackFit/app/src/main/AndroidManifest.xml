@@ -15,6 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyTrackFit"
         tools:targetApi="31">
+
+        <!-- Actividad principal -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -23,6 +25,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Actividad para login -->
+        <activity android:name=".LoginActivity" />
+
+        <!-- Actividad para registro -->
+        <activity android:name=".SignUpActivity" />
+
     </application>
 
 </manifest>
