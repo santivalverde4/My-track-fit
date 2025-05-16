@@ -14,10 +14,6 @@ class Exercise (
     fun getName(): String {
         return name
     }
-    //---id
-    fun getId(): Int {
-        return id
-    }
     //---workOut
     fun setWorkOut(workOut: WorkOut){
         this.workOut = workOut

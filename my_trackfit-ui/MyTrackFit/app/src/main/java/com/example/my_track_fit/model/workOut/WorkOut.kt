@@ -41,10 +41,7 @@ abstract class WorkOut(
     fun getRoutines(): MutableList<Routine> {
         return routineList
     }
-    //---id
-    fun getId(): Int {
-        return id
-    }
+
     //---Exercise
     fun setExercise(exerciseList: MutableList<Exercise>) {
         this.exerciseList = exerciseList

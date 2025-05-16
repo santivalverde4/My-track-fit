@@ -1,17 +1,19 @@
 package com.example.my_track_fit
 
-import android.os.Bundle // Necesario para el método onCreate
-import android.widget.Button // Para vincular el botón de registro
-import android.widget.EditText // Para vincular los campos de texto de usuario, contraseña y confirmación
-import android.widget.Toast // Para mostrar mensajes al usuario
-import androidx.appcompat.app.AppCompatActivity // Porque SignUpActivity extiende AppCompatActivity
-import com.example.my_track_fit.network.ApiService // Para usar Retrofit
-import com.example.my_track_fit.network.LoginRequest // Para enviar datos al backend
-import com.example.my_track_fit.network.RetrofitClient // Para crear la instancia de Retrofit
-import retrofit2.Call // Para manejar las llamadas de Retrofit
-import retrofit2.Callback // Para manejar las respuestas de Retrofit
-import retrofit2.Response // Para manejar las respuestas de Retrofit
-
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.my_track_fit.network.ApiService
+import com.example.my_track_fit.network.LoginRequest
+import com.example.my_track_fit.network.LoginResponse   // <-- AGREGA ESTA LÍNEA
+import com.example.my_track_fit.network.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +39,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun signUpUser(username: String, password: String) {
-        val apiService: ApiService = RetrofitClient.instance.create(ApiService::class.java)
+        val apiService = RetrofitClient.instance
         val signUpRequest = LoginRequest(username, password)
 
         apiService.signUpUser(signUpRequest).enqueue(object : retrofit2.Callback<LoginResponse> {

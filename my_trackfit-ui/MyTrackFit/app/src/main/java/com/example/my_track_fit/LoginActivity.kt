@@ -1,18 +1,19 @@
 package com.example.my_track_fit
 
-import android.content.Intent // Necesario para navegar a otra actividad
-import android.os.Bundle // Necesario para el método onCreate
-import android.widget.Button // Necesario para vincular el botón de inicio de sesión
-import android.widget.EditText // Necesario para vincular los campos de texto
-import android.widget.TextView // Necesario para vincular el TextView de registro
-import android.widget.Toast // Necesario para mostrar mensajes al usuario
-import androidx.appcompat.app.AppCompatActivity // Necesario porque LoginActivity extiende AppCompatActivity
-import com.example.my_track_fit.network.ApiService // Necesario para usar Retrofit
-import com.example.my_track_fit.network.LoginRequest // Necesario para enviar datos al backend
-import com.example.my_track_fit.network.RetrofitClient // Necesario para crear la instancia de Retrofit
-import retrofit2.Call // Necesario para manejar las llamadas de Retrofit
-import retrofit2.Callback // Necesario para manejar las respuestas de Retrofit
-import retrofit2.Response // Necesario para manejar las respuestas de Retrofit
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.my_track_fit.network.ApiService
+import com.example.my_track_fit.network.LoginRequest
+import com.example.my_track_fit.network.LoginResponse   // <-- AGREGA ESTA LÍNEA
+import com.example.my_track_fit.network.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
@@ -47,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loginUser(username: String, password: String) {
-        val apiService = RetrofitClient.instance.create(ApiService::class.java)
+        val apiService = RetrofitClient.instance
         val loginRequest = LoginRequest(username, password)
 
         apiService.loginUser(loginRequest).enqueue(object : Callback<LoginResponse> {
@@ -61,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Toast.makeText(this@LoginActivity, "Error de conexión: ${t.message}", Toast.LENGTH_SHORT).show()
+               Toast.makeText(this@LoginActivity, "Error de conexión: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
