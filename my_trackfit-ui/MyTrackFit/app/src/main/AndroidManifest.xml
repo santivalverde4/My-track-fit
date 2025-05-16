@@ -18,7 +18,7 @@
 
         <!-- Actividad principal -->
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,9 +26,8 @@
             </intent-filter>
         </activity>
 
-        <!-- Actividad para login -->
-        <activity android:name=".LoginActivity" />
-
+        <!-- Actividad para la pantalla principal -->
+        <activity android:name=".MainActivity" />
         <!-- Actividad para registro -->
         <activity android:name=".SignUpActivity" />
 
