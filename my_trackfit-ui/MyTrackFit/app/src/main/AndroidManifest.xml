@@ -16,7 +16,7 @@
         android:theme="@style/Theme.MyTrackFit"
         tools:targetApi="31">
 
-        <!-- Actividad principal -->
+        <!-- Login como pantalla principal -->
         <activity
             android:name=".LoginActivity"
             android:exported="true">
@@ -26,10 +26,11 @@
             </intent-filter>
         </activity>
 
-        <!-- Actividad para la pantalla principal -->
-        <activity android:name=".MainActivity" />
-        <!-- Actividad para registro -->
+        <!-- Registro -->
         <activity android:name=".SignUpActivity" />
+
+        <!-- MainActivity (ya no es principal) -->
+        <activity android:name=".MainActivity" />
 
     </application>
 

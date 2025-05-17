@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.my_track_fit.network.ApiService
 import com.example.my_track_fit.network.LoginRequest
-import com.example.my_track_fit.network.LoginResponse   // <-- AGREGA ESTA LÍNEA
+import com.example.my_track_fit.network.LoginResponse
 import com.example.my_track_fit.network.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -55,9 +55,11 @@ class LoginActivity : AppCompatActivity() {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful && response.body()?.success == true) {
                     Toast.makeText(this@LoginActivity, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
-                    // Redirigir al usuario a la siguiente pantalla
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    finish() // Evita que el usuario regrese al login con el botón de retroceso
                 } else {
-                    Toast.makeText(this@LoginActivity, "Error: ${response.body()?.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LoginActivity, "Error: "+(response.body()?.message ?: "Error desconocido"), Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -65,5 +67,5 @@ class LoginActivity : AppCompatActivity() {
                Toast.makeText(this@LoginActivity, "Error de conexión: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
-    } //pruebas escribo pruebas hacete push ostia
+    }
 }
