@@ -1,34 +1,35 @@
+<<<<<<< Updated upstream
 import { execute } from "../config/db.config";
 import { TYPES } from "mssql";
 import { useMock } from "../app";
 import ErrorHandler from "../utils/ErrorHandler";
+=======
+const { TYPES } = require("mssql");
+>>>>>>> Stashed changes
 
+// Recibe la función execute como parámetro en el constructor
 class AuthService {
-  // Inicia sesión de un usuario usando sus credenciales.
+  constructor(execute) {
+    this.execute = execute;
+  }
+
   async loginUser(credentials) {
     const { Username: username, Password: password } = credentials;
-
     const params = {
       inUsername: [username, TYPES.VarChar],
       inPassword: [password, TYPES.VarChar],
     };
-
     try {
-      if (useMock) {
-        return { success: true, Id: 1, Username: "test" };
+      const response = await this.execute("sp_login", params, {});
+      if (response.output && response.output.outResultCode == 0) {
+        let data = response.recordset[0];
+        return {
+          success: true,
+          Id: data.Id,
+          Username: username,
+        };
       } else {
-        const response = await execute("sp_login", params, {});
-        if (response.output.outResultCode == 0) {
-          let data = response.recordset[0];
-          const loginResponse = {
-            success: true,
-            Id: data.Id,
-            Username: username,
-          };
-          return loginResponse;
-        } else {
-          return ErrorHandler(response);
-        }
+        return { success: false, message: "Login failed" };
       }
     } catch (error) {
       console.error("Error details:", error);
@@ -36,52 +37,18 @@ class AuthService {
     }
   }
 
-  // Cierra la sesión de un usuario dado su ID.
-  async logoutUser(userId) {
-    if (!userId) {
-      return false;
-    }
-
-    const params = {
-      inUserId: [String(userId), TYPES.Int],
-    };
-
-    try {
-      if (useMock) {
-        return true;
-      } else {
-        const response = await execute("sp_logout", params, {});
-        if (response.output.outResultCode == 0) {
-          return true;
-        } else {
-          throw new Error("DB error");
-        }
-      }
-    } catch (error) {
-      console.error("Error details:", error);
-      throw new Error(`An error occurred while logging out: ${error}`);
-    }
-  }
-
-  // Registra un nuevo usuario.
   async signUpUser(credentials) {
     const { Username: username, Password: password } = credentials;
-
     const params = {
       inUsername: [username, TYPES.VarChar],
       inPassword: [password, TYPES.VarChar],
     };
-
     try {
-      if (useMock) {
+      const response = await this.execute("sp_crear_usuario", params, { outResultCode: TYPES.Int });
+      if (response.output && response.output.outResultCode === 0) {
         return { success: true, message: "User created successfully." };
       } else {
-        const response = await execute("sp_crear_usuario", params, { outResultCode: TYPES.Int });
-        if (response.output.outResultCode === 0) {
-          return { success: true, message: "User created successfully." };
-        } else {
-          return ErrorHandler(response);
-        }
+        return { success: false, message: "Sign up failed" };
       }
     } catch (error) {
       console.error("Error details:", error);
@@ -90,4 +57,4 @@ class AuthService {
   }
 }
 
-export default new AuthService();
+module.exports = AuthService;
