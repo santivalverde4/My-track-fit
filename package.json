@@ -11,5 +11,9 @@
   "devDependencies": {
     "eslint": "^9.25.1",
     "nodemon": "^3.1.10"
+  },
+  "scripts": {
+    "dev": "nodemon ./my_trackfit-api/routes/auth.js",
+    "start": "node ./my_trackfit-api/routes/auth.js"
   }
 }

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const AuthService = require("./autenticacion"); // Archivo donde haces los llamados a la base de datos
+const AuthService = require("../autenticacion"); // Archivo donde haces los llamados a la base de datos
 
 // Endpoint para login
 router.post("/login", async (req, res) => {
@@ -37,6 +37,5 @@ router.post("/signup", async (req, res) => {
         res.status(500).json({ success: false, message: "Error interno del servidor" });
     }
 });
-
 
 module.exports = router;

@@ -1,4 +1,4 @@
-import { execute } from "../config/db.config";
+import { execute } from "../conexion_bd";
 import { TYPES } from "mssql";
 import { useMock } from "../app";
 import ErrorHandler from "../utils/ErrorHandler";

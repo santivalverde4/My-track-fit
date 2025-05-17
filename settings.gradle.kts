@@ -20,4 +20,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "My-Track-Fit"
-include(":app")
+include(":my_trackfit-ui:MyTrackFit:app")
